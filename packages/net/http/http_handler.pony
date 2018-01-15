@@ -23,6 +23,11 @@ If you are writing a server, you will need to deal with the
 
 """
 
+primitive HTTPConnectFailed
+primitive HTTPAuthFailed
+
+type HTTPFailure is (HTTPConnectFailed | HTTPAuthFailed)
+
 interface HTTPHandler
   """
   This is the interface through which HTTP messages are delivered *to*
@@ -88,6 +93,12 @@ interface HTTPHandler
     """
     Notification that the HTTPSession is ready for Stream or Chunked
     body data.
+    """
+
+  fun ref failed(reason: HTTPFailure) => None
+    """
+    Notification that the TCP connection to the server has failed for
+    some reason.
     """
 
 interface HandlerFactory

@@ -170,6 +170,9 @@ actor _GetWork
     """
     _env.out.print("-- end of body --")
 
+  be failed(reason: String) =>
+    _env.out.print(reason + " failure")
+
 class NotifyFactory is HandlerFactory
   """
   Create instances of our simple Receive Handler.
@@ -217,3 +220,9 @@ class HttpNotify is HTTPHandler
 
   fun ref cancelled() =>
     _main.cancelled()
+
+  fun ref failed(reason: HTTPFailure) =>
+    _main.failed(match reason
+      | HTTPConnectFailed => "TCP connection"
+      | HTTPAuthFailed => "SSL authentication"
+    end)

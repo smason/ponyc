@@ -140,6 +140,7 @@ actor _ClientConnection is HTTPSession
     """
     _cancel_all()
     _conn = None
+    _app_handler.failed(HTTPConnectFailed)
 
   be _auth_failed(conn: TCPConnection) =>
     """
@@ -147,6 +148,7 @@ actor _ClientConnection is HTTPSession
     """
     _cancel_all()
     _conn = None
+    _app_handler.failed(HTTPAuthFailed)
 
   be _closed(conn: TCPConnection) =>
     """
