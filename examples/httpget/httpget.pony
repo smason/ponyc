@@ -221,8 +221,8 @@ class HttpNotify is HTTPHandler
   fun ref cancelled() =>
     _main.cancelled()
 
-  fun ref failed(reason: HTTPFailure) =>
-    _main.failed(match reason
-      | HTTPConnectFailed => "TCP connection"
-      | HTTPAuthFailed => "SSL authentication"
-    end)
+  fun ref connect_failed() =>
+    _main.failed("TCP connection")
+
+  fun ref auth_failed() =>
+    _main.failed("SSL authentication")

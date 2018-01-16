@@ -23,11 +23,6 @@ If you are writing a server, you will need to deal with the
 
 """
 
-primitive HTTPConnectFailed
-primitive HTTPAuthFailed
-
-type HTTPFailure is (HTTPConnectFailed | HTTPAuthFailed)
-
 interface HTTPHandler
   """
   This is the interface through which HTTP messages are delivered *to*
@@ -95,9 +90,15 @@ interface HTTPHandler
     body data.
     """
 
-  fun ref failed(reason: HTTPFailure) => None
+  fun ref connection_failed() => None
     """
     Notification that the TCP connection to the server has failed for
+    some reason.
+    """
+
+  fun ref auth_failed() => None
+    """
+    Notification that the SSL handshake with the server has failed for
     some reason.
     """
 
